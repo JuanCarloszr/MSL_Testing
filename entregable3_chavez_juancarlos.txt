@@ -1,0 +1,37 @@
+pipeline{
+    agent any
+    
+    stages{
+        
+        stage('Verificar Logs'){
+            steps{
+                echo "Validando existencia de logs"
+                bat 'cmd /c dir C:\\Users\\jcarlos\\Documents\\Logs | findstr /r "secure.log" ' //para usuarios Windows
+                //sh 'ls /home/user/Logs | grep result.log' 
+                //para usuarios Linux||Mac
+                echo "Logs encontrados"
+            }    
+        }
+        
+        stage('Verificar Script'){
+            steps{
+                echo "Validando existencia de script"
+            bat 'cmd /c dir C:\\Users\\jcarlos\\Documents\\testingMSL | findstr /r "entregable2_chavez_juancarlos.py"'
+                echo "Script encontrado"
+            }
+        }
+        
+        stage ('Analizar Logs'){
+            steps{
+                echo "Procediendo a ejecutar el script"
+                bat 'cmd python C:\\Users\\jcarlos\\Documents\\testingMSL\\entregable2_chavez_juancarlos.py'
+                //bat 'python -m pytest -s C:\\Users\\jcarlos\\Documents\\testingMSL\\entregable2_chavez_juancarlos.py'
+                echo "Termino la ejecucion"
+            }
+        }
+           
+    
+        
+    }
+    
+}
